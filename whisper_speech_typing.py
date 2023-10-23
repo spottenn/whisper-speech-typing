@@ -6,7 +6,8 @@ from faster_whisper import WhisperModel
 import threading
 import time
 import argparse
-
+import wave
+import io
 
 class RealTimeTranscriber:
     def __init__(self, model_size, device, compute_type, hotkey):
@@ -34,14 +35,26 @@ class RealTimeTranscriber:
             data = self.stream.read(1024)
             with self.lock:
                 self.frames.append(np.frombuffer(data, dtype=np.int16))
+            # print(data[:10])
+
         self.stream.stop_stream()
         self.stream.close()
 
     def stop_audio_capture(self):
         with self.lock:
             self.is_recording = False
-        audio_data = np.concatenate(self.frames)
-        return audio_data
+        audio_data = b''.join(self.frames)
+        audio_buffer = io.BytesIO(audio_data)
+
+        wave_file = wave.open(audio_buffer, 'wb')
+        wave_file.setnchannels(1)
+        wave_file.setsampwidth(self.p.get_sample_size(pyaudio.paInt16))
+        wave_file.setframerate(16000)
+        wave_file.writeframes(audio_data)
+        wave_file.close()
+
+        audio_buffer.seek(0)  # Move the cursor to the start of the BytesIO buffer
+        return audio_buffer
 
     def transcribe_audio(self, audio):
         segments, _ = self.model.transcribe(audio, without_timestamps=True)
@@ -53,6 +66,9 @@ class RealTimeTranscriber:
         return
 
     def type_text(self, text):
+        if text is None:
+            print("Empty text.")
+            return
         pyautogui.typewrite(text)
 
     def main(self):

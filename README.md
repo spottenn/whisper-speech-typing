@@ -1,4 +1,16 @@
-# Real-Time Speech-to-Text Transcription with Faster Whisper
+# Speech-to-Text Typing with Faster Whisper
+
+## Quick Start
+1. Make sure you have Python, and the 2 NVIDIA libraries from the [requirements] section. 
+2. Open a terminal as an administrator and run these commands
+```bash
+git clone https://github.com/spottenn/whisper-speech-typing.git
+cd whisper-speech-typing
+pip install -r requirements.txt
+python whisper_speech_typing.py
+```
+3. Wait until for the script to download the model and say 
+4. Place cursor where you want to type, hold F4 and speak, then let go to type.
 
 ## Overview
 This project provides a Python script for real-time speech-to-text typing using the Faster Whisper API. The application captures audio from the default microphone, transcribes it on-the-fly, and outputs the transcribed text to the current location of the cursor.
@@ -29,7 +41,7 @@ GPU execution requires the following NVIDIA libraries to be installed:
 
 There are multiple ways to install these libraries. Please refer to the [Faster Whisper Requirements Section](https://github.com/guillaumekln/faster-whisper#requirements) for detailed instructions and options. 
 
-[Windows only] I used Purfview's zip file that has the required NVIDIA libraries for Windows in a [single archive](https://github.com/Purfview/whisper-standalone-win/releases/tag/libs) from [whisper-standalone-win](https://github.com/Purfview/whisper-standalone-win). Decompress the archive and place the libraries in a the same directory as the script.
+Windows only: I used Purfview's zip file that has the required NVIDIA libraries for Windows in a [single archive](https://github.com/Purfview/whisper-standalone-win/releases/tag/libs) from [whisper-standalone-win](https://github.com/Purfview/whisper-standalone-win). Decompress the archive and place the libraries in a the same directory as the script.
 
 ## Usage
 

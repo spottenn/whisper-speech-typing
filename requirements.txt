@@ -1,0 +1,5 @@
+pyaudio
+numpy
+keyboard
+pyautogui
+faster_whisper
