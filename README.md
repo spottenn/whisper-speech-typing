@@ -9,7 +9,7 @@ cd whisper-speech-typing
 pip install -r requirements.txt
 python whisper_speech_typing.py
 ```
-3. Wait until for the script to download the model and say 
+3. Wait for the script to download the model
 4. Place cursor where you want to type, hold F4 and speak, then let go to type.
 
 ## Overview
