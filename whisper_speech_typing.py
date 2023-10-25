@@ -61,9 +61,10 @@ class RealTimeTranscriber:
         segments_list = list(segments)
 
         if len(segments_list) != 0:
-            return segments_list[0].text
+            full_transcription = " ".join(segment.text for segment in segments_list)
+            return full_transcription
         print("Error transcribing. Blank audio?")
-        return
+        return ""
 
     def type_text(self, text):
         if text is None:
@@ -74,6 +75,7 @@ class RealTimeTranscriber:
     def main(self):
         print(f"Press and hold {self.hotkey} to start audio capture. Release {self.hotkey} to transcribe and type.")
         while True:
+            time.sleep(0.1)
             if keyboard.is_pressed(self.hotkey):
                 print("Capturing audio... Release F4 to stop.")
                 threading.Thread(target=self.start_audio_capture).start()
@@ -87,8 +89,9 @@ class RealTimeTranscriber:
                 print("Done.")
 
 
+
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Real-Time Speech-to-Text Transcription')
+    parser = argparse.ArgumentParser(description=' Voice typing script.')
     parser.add_argument('--model_size', type=str, default='large-v2', help='Size of the Whisper model')
     parser.add_argument('--device', type=str, default='cuda', help='Device to run the Whisper model on')
     parser.add_argument('--compute_type', type=str, default='float16', help='Compute datatype for the Whisper model')
