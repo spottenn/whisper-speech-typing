@@ -24,9 +24,11 @@ For details on these, see the [papers](https://cdn.openai.com/papers/whisper.pdf
 ## Performance and Accuracy
 In general the larger models are slower, but more accurate while the smaller ones are the opposite. 
 
-This software should work on most desktop Operating Systems, although it has been primarily tested on Windows 10 and Windows 11. A GPU is required for real-time voice typing performance. Performance benchmarks are as follows:
-- On an RTX 2070 Super, with the `large-v2` model, the wait is approximately 2 seconds for a sentence.
-- On a Quadro P1000 Mobile, with the `medium` size model, float32 mode*, the wait is approximately 3 seconds.
+The model works in segments, which are audio clips of 20-30 seconds. The segment transcription times are fairly static between runs on the same hardware, with the exception that the first segment of a recording takes ~%60-80 longer than the others. In practice, this means that if you are speaking longer phrases and sentences, the typing feels faster than if you speak just a few words at a time.
+
+This software should work on most desktop Operating Systems with a CUDA compatible GPU, although it has been primarily tested on Windows 10 and Windows 11. A GPU is required for real-time voice typing performance. Performance estimates are as follows:
+- On an RTX 2070 Super, with the `large-v2` model, the wait is approximately 2 seconds for the first segment.
+- On a Quadro P1000 Mobile, with the `medium` size model, float32 mode*, the wait is approximately 3-5 seconds for the first segment.
 
 *Since this project uses the faster-whisper models, which are float16, float32 is generally not recommended since the speed will decrease and memory usage will increase with no boost to accuracy. The exception is if your card does not support hardware float16.
 ### Note on VRAM
