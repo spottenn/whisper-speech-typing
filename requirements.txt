@@ -3,3 +3,4 @@ numpy
 keyboard
 pyautogui
 faster_whisper
+pytest
