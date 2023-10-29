@@ -144,7 +144,8 @@ if __name__ == "__main__":
         parser.add_argument('--language', type=str, default='en', help='Compute datatype for the Whisper model')
         parser.add_argument('--hotkey', type=str, default='f4', help='Hotkey to start/stop audio capture')
         parser.add_argument('--type_hotkey', type=str, default='f2', help='Hotkey to just type the transcription')
-        parser.add_argument('--buffer', action='store_true', default=False, help='Buffer one second of audio before hotkey is pressed')
+        parser.add_argument('--no-buffer', action='store_false', dest='buffer', default=True,
+                            help='Do not buffer one second of audio before hotkey is pressed. may reduce power usage at the expense of potentially losing audio at the beginning.')
         args = parser.parse_args()
         transcriber = RealTimeTranscriber(model_size=args.model_size, device=args.device,
                                           compute_type=args.compute_type, language=args.language, hotkey=args.hotkey,
