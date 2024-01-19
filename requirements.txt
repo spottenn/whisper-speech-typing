@@ -1,6 +1,9 @@
 pyaudio
 numpy
-keyboard
 pyautogui
 faster_whisper
 pytest
+pyside2
+pynput
+pyperclip
+keyboard

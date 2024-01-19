@@ -1,5 +1,10 @@
 # Speech-to-Text Typing with Faster Whisper
 
+##Note: This is the old README. A new README needs to be written to reflect the recent rewrite and the addition of the GUI.
+
+---
+___
+___
 ## Quick Start
 1. Make sure you have Python, and the 2 NVIDIA libraries from the [requirements] section. 
 2. Open a terminal as an administrator and run these commands
@@ -7,7 +12,7 @@
 git clone https://github.com/spottenn/whisper-speech-typing.git
 cd whisper-speech-typing
 pip install -r requirements.txt
-python whisper_speech_typing.py
+python whisperspeechtypingcli.py
 ```
 3. Wait for the script to download the model
 4. Place cursor where you want to type, hold F4 and speak, then let go to type.
@@ -62,19 +67,19 @@ Windows only: I used Purfview's zip file that has the required NVIDIA libraries 
 #### Examples
 1. Run with default settings:
    ```bash
-   python whisper_speech_typing.py
+   python whisperspeechtypingcli.py
    ```
 
 2. Run with a specific model size and hotkey:
    ```bash
-   python whisper_speech_typing.py --model_size Medium --hotkey f9
+   python whisperspeechtypingcli.py --model_size Medium --hotkey f9
    ```
 
 ### Importing and Using in Another Project
 You can also import the `RealTimeTranscriber` class in another Python script and create an instance with your own configurations:
 
 ```python
-from whisper_speech_typing import RealTimeTranscriber
+from whisperspeechtypingcli import RealTimeTranscriber
 
 transcriber = RealTimeTranscriber(model_size='base', device='cuda', compute_type='float16', hotkey='f9')
 transcriber.main()
