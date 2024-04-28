@@ -10,13 +10,14 @@ from whisperqueue import WhisperQueue
 
 class SystemTrayApp(QSystemTrayIcon):
     status_updated = Signal(str, str)
-    def __init__(self, message_queue: WhisperQueue, config_manager: ConfigManager = None, restart_callback = None, start_stop_callback = None, close_callback = None):
+    def __init__(self, message_queue: WhisperQueue, config_manager: ConfigManager = None, restart_callback = None, start_stop_callback = None, close_callback = None, switch_ui_callback = None):
         super().__init__(QIcon())
         self.restart_callback = restart_callback
         self.start_stop_callback = start_stop_callback
         self.config_manager = config_manager or ConfigManager()
         self.message_queue = message_queue
         self.close_callback = close_callback
+        self.switch_ui_callback = switch_ui_callback
 
         self.status_updated.connect(self.update_status)
 
@@ -50,12 +51,15 @@ class SystemTrayApp(QSystemTrayIcon):
         self.start_stop_action = self.menu.addAction("Disable Typing")
         self.start_stop_action.triggered.connect(self.start_stop_callback)
 
+        self.switch_ui_action = self.menu.addAction("Open Floating Window")
+        self.switch_ui_action.triggered.connect(self.switch_ui_callback)
+
         self.exit_action = self.menu.addAction("Close")
         self.exit_action.triggered.connect(self.close_application)
 
         self.setContextMenu(self.menu)
         self.activated.connect(self.icon_activated)
-        self.show()
+        # self.show()
         self.showMessage("Whisper Speech Typing Started",
                          f"Hold {self.config_manager.get_setting('hotkey')} to type. \nClick green icon below for more.",
                          QSystemTrayIcon.Information, 5000)

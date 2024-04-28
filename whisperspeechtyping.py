@@ -9,7 +9,7 @@ from recorder import Recorder
 from texttyper import TextTyper
 from whisperqueue import WhisperQueue
 import threading
-
+import gc
 from systemtray import SystemTrayApp
 from floatwindow import FloatWindow
 
@@ -22,10 +22,11 @@ class WhisperTypingApp(QApplication):
         self.quitting = False
         print("Initializing application...")
         self.config_manager = ConfigManager()
-        self.floating_window = FloatWindow(config_manager=self.config_manager, minimize_callback=self.switch_gui, close_callback=self.close_application)
+        self.floating_window = FloatWindow(config_manager=self.config_manager, minimize_callback=self.switch_gui,
+                                           close_callback=self.close_application, switch_ui_callback=self.switch_gui)
         self.system_tray = SystemTrayApp(message_queue=self.message_queue, config_manager=self.config_manager,
                                          restart_callback=self.restart, start_stop_callback=self.start_stop_typing,
-                                         close_callback=self.close_application)
+                                         close_callback=self.close_application, switch_ui_callback=self.switch_gui)
         if self.config_manager.get_setting('active_gui') == 'floating':
             self.active_gui = self.floating_window
         else:
@@ -34,8 +35,9 @@ class WhisperTypingApp(QApplication):
         self.active_gui.show()
         self.display_thread = threading.Thread(target=self.display_state)
         self.display_thread.start()
-        self.load_and_initialize_components()
+        self.start_typing()
         self.message_queue.send_message("ready", "SystemTray", "Application initialized.")
+
 
     def load_and_initialize_components(self):
         # Load and initialize components
@@ -65,7 +67,6 @@ class WhisperTypingApp(QApplication):
                                             texttyper=self.texttyper,
                                             message_queue=self.message_queue)
 
-        self.start_typing()
 
     def display_state(self):
         while not self.quitting:
@@ -88,19 +89,22 @@ class WhisperTypingApp(QApplication):
                 # Default icon name if the status is not found in the dictionary
                 icon_name = status_to_icon.get(status, "wsp_disabled")
 
-                self.active_gui.status_updated.emit(icon_name, status)
+                self.floating_window.status_updated.emit(icon_name, status)
+                self.system_tray.status_updated.emit(icon_name, status)
 
             time.sleep(0.1)
 
     def switch_gui(self):
+        self.active_gui.hide()
         if self.active_gui == self.floating_window:
             self.active_gui = self.system_tray
+            self.config_manager.update_setting('active_gui', 'systemtray')
         else:
             self.active_gui = self.floating_window
+            self.config_manager.update_setting('active_gui', 'floating')
         self.active_gui.show()
     def restart(self):
         self.stop_typing()
-        self.load_and_initialize_components()
         self.start_typing()
         return
 
@@ -112,13 +116,19 @@ class WhisperTypingApp(QApplication):
 
     def start_typing(self):
         # TODO: start transcriber
-        self.hotkey_handler.start()
+        self.load_and_initialize_components()
         print("Speech typing started.")
         self.enabled = True
 
     def stop_typing(self):
         # TODO:stop transcriber
-        self.hotkey_handler.stop()
+        if (self.hotkey_handler != None):
+            self.hotkey_handler.stop()
+            del self.hotkey_handler
+            self.hotkey_handler = None
+        del self.transcriber
+        self.transcriber = None
+        gc.collect()
         print("Speech typing stopped.")
         self.enabled = False
 

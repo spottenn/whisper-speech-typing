@@ -9,12 +9,13 @@ from configmanager import ConfigManager
 
 class FloatWindow(QMainWindow):
     status_updated = Signal(str, str)
-    def __init__(self, config_manager = None, minimize_callback=None, settings_interface=None, close_callback=None, status_button_callback=None):
+    def __init__(self, config_manager = None, minimize_callback=None, settings_interface=None, close_callback=None, status_button_callback=None, switch_ui_callback=None):
         super().__init__()
         self.config_manager = config_manager or ConfigManager()
         self.minimize_callback = minimize_callback
         self.settings_interface = settings_interface or SettingsInterface(ConfigManager())  # Default to a new instance if none provided
         self.close_callback = close_callback
+        self.switch_ui_callback = switch_ui_callback
         self.status_button_callback = status_button_callback
         self.status_updated.connect(self.update_status)
 
@@ -61,7 +62,7 @@ class FloatWindow(QMainWindow):
         self.minimize_button.setIcon(QIcon('./assets/wsp_minimize.svg'))  # Replace with minimize icon path
         self.minimize_button.setFixedSize(30, 30)  # Set the size of the minimize button
         self.minimize_button.setIconSize(self.minimize_button.size() - QSize(5, 5))
-        self.minimize_button.clicked.connect(self.minimizeWindow)
+        self.minimize_button.clicked.connect(self.switch_ui_callback)
 
         # Close button
         self.close_button = QPushButton(central_widget)
@@ -140,7 +141,7 @@ class FloatWindow(QMainWindow):
 
     @Slot(str, str)
     def update_status(self, icon_name, status_text):
-        icon_path = f"assets/logo/16/{icon_name}.png"
+        icon_path = f"assets/png_icons/{icon_name}_128x128.png"
         self.status_button.setIcon(QIcon(icon_path))
         self.status_label.setText(status_text)
         # TODO add hints

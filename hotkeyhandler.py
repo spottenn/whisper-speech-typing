@@ -15,6 +15,7 @@ class HotkeyHandler:
         self.message_queue = message_queue
         self.running = False
         self.thread = None
+        self.start()
 
     def start_recording(self):
         if not self.recorder.is_recording:
@@ -53,6 +54,7 @@ class HotkeyHandler:
 
     def __del__(self):
         self.stop()
+        del self.transcriber
 
     def main(self):
         print(f"Press and hold {self.hotkey} and start speaking. Release to type.")

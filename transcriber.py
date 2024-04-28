@@ -27,4 +27,14 @@ class Transcriber(ABC):
         """
         pass
 
+    @abstractmethod
+    def set_backend(self, backend):
+        """
+        Set the transcription backend (local or remote).
+        """
+        pass
     # TODO: start and stop methods to release resources
+
+    @abstractmethod
+    def stop(self):
+        pass

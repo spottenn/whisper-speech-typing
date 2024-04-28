@@ -38,6 +38,17 @@ class LocalTranscriber(Transcriber):
         return ""
 
     def post_process(self, input_string):
+        # Check if the last character is not a whitespace
+        if input_string and not input_string[-1].isspace():
+            input_string += ' '
+
+        # Remove leading whitespace
         return input_string.lstrip()
 
     # TODO: start and stop methods to release resources
+
+    def set_backend(self, backend):
+        pass
+    def stop(self):
+        self.model = None
+        pass

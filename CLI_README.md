@@ -1,39 +1,24 @@
 # Speech-to-Text Typing with Faster Whisper
+
+##Note: This is the old README. A new README needs to be written to reflect the recent rewrite and the addition of the GUI.
+
+---
 ___
-## Project Status
-
-Current progress:
-- ✅ Core functionality for speech capture and transcription.
-- ✅ Integration with Faster Whisper API.
-- ✅ System tray and floating window GUIs.
-- ✅ UI for adjusting settings, model, and hotkeys.
-- ⬜️ Cross-platform compatibility (Linux and macOS).
-- ⬜️ Error handling and recovery.
-- ⬜️ Debug logging.
-- ⬜️ Multi-language support (English only for now).
-
-Updates will be provided as development progresses.
-
-## Potential Enhancements:
-
-- **Server Backend:** Process audio models remotely. (WhisperLive?)
-- **Live Transcription:** Real-time transcription with live text preview. (WhisperLive?)
-
 ___
 ## Quick Start
 1. Make sure you have Python, and the 2 NVIDIA libraries from the [requirements] section. 
 2. Open a terminal as an administrator and run these commands
-```commandline
+```bash
 git clone https://github.com/spottenn/whisper-speech-typing.git
 cd whisper-speech-typing
 pip install -r requirements.txt
-python whisperspeechtyping.py
+python whisperspeechtypingcli.py
 ```
-3. Wait for the program to download the model and initialize. When it is ready a green microphone will be displayed
+3. Wait for the script to download the model
 4. Place cursor where you want to type, hold F4 and speak, then let go to type.
 
 ## Overview
-This project provides a Python program for real-time speech-to-text typing using the Faster Whisper API. The application captures audio from the default microphone, transcribes it on-the-fly, and outputs the transcribed text to the current location of the cursor.
+This project provides a Python script for real-time speech-to-text typing using the Faster Whisper API. The application captures audio from the default microphone, transcribes it on-the-fly, and outputs the transcribed text to the current location of the cursor.
 
 ## Accuracy, Punctuation, Capitalization, and Multilingual
 Since this uses the Whisper models, the speech-to-text typing is among the most accurate ever and includes __automatic punctuation and capitalization!__ The large-v2 model is even __multilingual!__  
@@ -52,7 +37,7 @@ This software should work on most desktop Operating Systems with a CUDA compatib
 
 *Since this project uses the faster-whisper models, which are float16, float32 is generally not recommended since the speed will decrease and memory usage will increase with no boost to accuracy. The exception is if your card does not support hardware float16.
 ### Note on VRAM
-The performance greatly worsens or the program may not even run if the graphics card does not have enough room to store the model entirely in its VRAM. In practice this means ~3.7 GB for Large-v2 if float16 operations are supported, and double that if not. That is why I had to run the medium model on the P1000. 
+The performance greatly worsens if the graphics card does not have enough room to store the model entirely in its VRAM. In practice this means ~3.7 GB for Large-v2 if float16 operations are supported, and double that if not. That is why I had to run the medium model on the P1000. 
 
 ## Requirements and Pre-Installation
 - Python 3.8 or greater
@@ -79,6 +64,27 @@ Windows only: I used Purfview's zip file that has the required NVIDIA libraries 
 - `--compute_type`: Compute type for the Whisper model (default: 'float16')
 - `--hotkey`: Hotkey to start/stop audio capture (default: 'f4')
 
+#### Examples
+1. Run with default settings:
+   ```bash
+   python whisperspeechtypingcli.py
+   ```
+
+2. Run with a specific model size and hotkey:
+   ```bash
+   python whisperspeechtypingcli.py --model_size Medium --hotkey f9
+   ```
+
+### Importing and Using in Another Project
+You can also import the `RealTimeTranscriber` class in another Python script and create an instance with your own configurations:
+
+```python
+from whisperspeechtypingcli import RealTimeTranscriber
+
+transcriber = RealTimeTranscriber(model_size='base', device='cuda', compute_type='float16', hotkey='f9')
+transcriber.main()
+```
+
 ## Credits
 Special thanks to the Faster Whisper project for providing the speech-to-text API utilized in this application. The project can be found [here](https://github.com/guillaumekln/faster-whisper).
-Also, special thanks to openAI for open-sourcing their whisper models and making high quality STT with automatic capitalization and punctuation available.
+Also, special thanks to openAI for open-sourcing their whisper project and making high

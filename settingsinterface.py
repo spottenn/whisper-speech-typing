@@ -4,7 +4,7 @@ from PySide2.QtCore import Slot
 from PySide2.QtWidgets import QWidgetAction, QWidget, QVBoxLayout, QLabel, QComboBox, QHBoxLayout, QLineEdit, \
     QPushButton
 
-from hotkeyrecorder import HotkeySaver
+from hotkeysaver import HotkeySaver
 
 class SettingsInterface(QWidgetAction):
     def __init__(self, config_manager, parent=None, save_settings_callback=None):
@@ -56,7 +56,15 @@ class SettingsInterface(QWidgetAction):
         model_size_layout = QHBoxLayout()
         model_size_layout.addWidget(QLabel("Model Size:"))
         self.model_size_input = QComboBox()
-        self.model_size_input.addItems(["tiny", "base", "small", "medium", "large", "large-v2", "large-v3"])
+        self.model_size_input.addItems([
+            "tiny", "tiny.en",
+            "base", "base.en",
+            "small", "small.en",
+            "medium", "medium.en",
+            "large",
+            "large-v2",
+            "large-v3"
+        ])
         self.model_size_input.setCurrentText(self.config_manager.get_setting('model_size'))
         model_size_layout.addWidget(self.model_size_input)
         layout.addLayout(model_size_layout)
