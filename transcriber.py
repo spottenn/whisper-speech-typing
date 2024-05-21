@@ -18,16 +18,6 @@ class Transcriber(ABC):
         pass
 
     @abstractmethod
-    def post_process(self, input_string):
-        """
-        Post-process the transcribed text. This method should be implemented by all subclasses.
-
-        :param input_string: The transcribed text to post-process.
-        :return: The post-processed text.
-        """
-        pass
-
-    @abstractmethod
     def set_backend(self, backend):
         """
         Set the transcription backend (local or remote).
