@@ -1,3 +1,4 @@
+import threading
 import keyboard
 import time
 from whisperqueue import WhisperQueue
@@ -15,14 +16,20 @@ class HotkeyHandler:
         self.message_queue = message_queue
         self.running = False
         self.thread = None
+        self.keyboard_lock = threading.Lock()
         self.start()
 
     def start_recording(self):
         if not self.recorder.is_recording:
+            print("getting  lock")
+            self.keyboard_lock.acquire()
             self.message_queue.send_message("recording", "HotkeyHandler", "Capturing audio...")
             self.recorder.start_audio_capture()
 
     def stop_recording(self):
+        print("releasing lock")
+        if self.keyboard_lock.locked():
+            self.keyboard_lock.release()
         audio = self.recorder.stop_audio_capture()
         self.message_queue.send_message("transcribing", "HotkeyHandler", "Transcribing audio...")
         self.transcription = self.transcriber.transcribe_audio(audio)
@@ -36,20 +43,39 @@ class HotkeyHandler:
     def start(self):
         if not self.running:
             self.running = True
-            # Register hotkeys
-            keyboard.add_hotkey(self.hotkey, self.start_recording, suppress=True)
-            keyboard.add_hotkey(self.hotkey, self.stop_recording, trigger_on_release=True, suppress=True)
-            keyboard.add_hotkey(self.retype_hotkey, self.type_transcription, suppress=True)
+            self.register_hotkeys()
+            self.start_heartbeat()
             self.message_queue.send_message("ready", "HotkeyHandler", "Ready for hotkeys.")
 
     def stop(self):
         if self.running:
             self.running = False
-            keyboard.unhook_all_hotkeys()
+            with self.keyboard_lock:
+                keyboard.unhook_all_hotkeys()
             self.recorder.stop_audio_capture()
             self.recorder.stream.close()
             self.recorder.p.terminate()
             self.message_queue.send_message("disabled", "HotkeyHandler", "HotkeyHandler stopped.")
+    def register_hotkeys(self):
+        with self.keyboard_lock:
+            # Register hotkeys
+            keyboard.add_hotkey(self.hotkey, self.start_recording, suppress=True)
+            keyboard.add_hotkey(self.hotkey, self.stop_recording, trigger_on_release=True, suppress=True)
+            keyboard.add_hotkey(self.retype_hotkey, self.type_transcription, suppress=True)
+    def start_heartbeat(self):
+        # TODO: permanent fix hotkeys getting unregistered
+        def fix_hotkeys():
+            while self.running:
+
+                time.sleep(5)
+                start_time = time.time()
+                with self.keyboard_lock:
+                    keyboard.unhook_all_hotkeys()
+                self.register_hotkeys()
+                # print(f"Time taken to register hotkeys: {time.time() - start_time:.6f} seconds")
+
+        threading.Thread(target=fix_hotkeys).start()
+
 
     def __del__(self):
         self.stop()
