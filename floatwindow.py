@@ -69,7 +69,7 @@ class FloatWindow(QMainWindow):
         self.close_button.setIcon(QIcon('./assets/wsp_close.svg'))  # Replace with gear icon path
         self.close_button.setFixedSize(30, 30)  # Smaller size for close button
         self.close_button.setIconSize(self.settings_button.size()-QSize(5, 5))
-        self.close_button.clicked.connect(self.close)
+        self.close_button.clicked.connect(self.close_application)
 
         # Add buttons to the top row
         top_row_layout.addWidget(self.settings_button, 0, Qt.AlignTop | Qt.AlignLeft)
