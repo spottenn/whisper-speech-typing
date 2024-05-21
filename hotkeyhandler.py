@@ -26,7 +26,6 @@ class HotkeyHandler:
         audio = self.recorder.stop_audio_capture()
         self.message_queue.send_message("transcribing", "HotkeyHandler", "Transcribing audio...")
         self.transcription = self.transcriber.transcribe_audio(audio)
-        self.transcription = self.transcriber.post_process(self.transcription)
         self.type_transcription()
 
     def type_transcription(self):
