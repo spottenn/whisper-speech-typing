@@ -34,7 +34,7 @@ class Recorder:
                 self.frames.append(data)
             else:
                 self.circular_buffer.append(data)
-        return (None, pyaudio.paContinue)
+        return None, pyaudio.paContinue
 
     def start_audio_capture(self):
         with self.lock:
