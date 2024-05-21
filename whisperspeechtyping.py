@@ -1,3 +1,4 @@
+import signal
 import time
 import sys
 
@@ -122,12 +123,9 @@ class WhisperTypingApp(QApplication):
 
     def stop_typing(self):
         # TODO:stop transcriber
-        if (self.hotkey_handler != None):
-            self.hotkey_handler.stop()
-            del self.hotkey_handler
-            self.hotkey_handler = None
-        del self.transcriber
-        self.transcriber = None
+        self.hotkey_handler.stop()
+
+        self.transcriber.stop()
         gc.collect()
         print("Speech typing stopped.")
         self.enabled = False
