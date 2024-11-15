@@ -1,7 +1,7 @@
 import sys
-from PySide2.QtWidgets import QApplication, QSystemTrayIcon, QMenu, QLabel, QWidgetAction, QPushButton
-from PySide2.QtGui import QIcon, QCursor
-from PySide2.QtCore import Slot, Signal
+from PySide6.QtWidgets import QApplication, QSystemTrayIcon, QMenu, QLabel, QWidgetAction, QPushButton
+from PySide6.QtGui import QIcon, QCursor
+from PySide6.QtCore import Slot, Signal
 
 from configmanager import ConfigManager
 from settingsinterface import SettingsInterface

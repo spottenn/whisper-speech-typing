@@ -3,7 +3,7 @@ numpy
 pyautogui
 faster_whisper
 pytest
-pyside2
+pyside6
 pynput
 pyperclip
 keyboard

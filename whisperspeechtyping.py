@@ -2,7 +2,7 @@ import signal
 import time
 import sys
 
-from PySide2.QtWidgets import QApplication
+from PySide6.QtWidgets import QApplication
 from configmanager import ConfigManager
 from hotkeyhandler import HotkeyHandler
 from localtranscriber import LocalTranscriber

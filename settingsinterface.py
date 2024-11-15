@@ -1,7 +1,7 @@
 import time
 
-from PySide2.QtCore import Slot
-from PySide2.QtWidgets import QWidgetAction, QWidget, QVBoxLayout, QLabel, QComboBox, QHBoxLayout, QLineEdit, \
+from PySide6.QtCore import Slot
+from PySide6.QtWidgets import QWidgetAction, QWidget, QVBoxLayout, QLabel, QComboBox, QHBoxLayout, QLineEdit, \
     QPushButton
 
 from hotkeysaver import HotkeySaver
