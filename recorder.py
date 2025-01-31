@@ -23,7 +23,8 @@ class Recorder:
                                   rate=16000,
                                   input=True,
                                   frames_per_buffer=1000,
-                                  stream_callback=self.audio_callback)
+                                  stream_callback=self.audio_callback,
+                                  start=False)
         if self.buffer:
             self.stream.start_stream()
 
