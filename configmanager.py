@@ -3,14 +3,13 @@ import json
 class ConfigManager:
     def __init__(self, config_file='settings.json'):
         self.config_file = config_file
-        self.settings = None
-        self.load_config()
+        self.settings = self.load_config()
 
 
     def load_config(self):
         try:
             with open(self.config_file, 'r') as f:
-                self.settings = json.load(f)
+                return json.load(f)
         except FileNotFoundError:
             return {
                 "model_size": "large-v2",

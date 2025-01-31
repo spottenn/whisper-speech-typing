@@ -13,7 +13,7 @@ class FloatWindow(QMainWindow):
         super().__init__()
         self.config_manager = config_manager or ConfigManager()
         self.minimize_callback = minimize_callback
-        self.settings_interface = settings_interface or SettingsInterface(ConfigManager())  # Default to a new instance if none provided
+        self.settings_interface = settings_interface or SettingsInterface(self.config_manager)  # Default to a new instance if none provided
         self.close_callback = close_callback
         self.switch_ui_callback = switch_ui_callback
         self.status_button_callback = status_button_callback

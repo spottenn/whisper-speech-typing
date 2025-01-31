@@ -20,7 +20,7 @@ class SettingsInterface(QWidgetAction):
         # Hotkey settings
         layout.addWidget(QLabel("Type With Voice"))
         hotkey_layout = QHBoxLayout()
-        self.hotkey_input = QLineEdit(config_manager.get_setting('hotkey'))
+        self.hotkey_input = QLineEdit(self.config_manager.get_setting('hotkey'))
         hotkey_layout.addWidget(self.hotkey_input)
         self.record_hotkey_button = QPushButton("Record")
         self.record_hotkey_button.clicked.connect(self.record_start_stop_hotkey)
