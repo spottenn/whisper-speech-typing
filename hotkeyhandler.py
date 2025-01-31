@@ -40,6 +40,11 @@ class HotkeyHandler:
         self.text_typer.type_text(self.transcription)
         self.message_queue.send_message("ready", "HotkeyHandler", "Done typing transcription")
 
+    def retype_transcription(self):
+        self.message_queue.send_message("typing", "HotkeyHandler", "Retyping transcription (safe)")
+        self.text_typer.safe_type_text(self.transcription)
+        self.message_queue.send_message("ready", "HotkeyHandler", "Done retyping transcription")
+
     def start(self):
         if not self.running:
             self.running = True
@@ -61,14 +66,14 @@ class HotkeyHandler:
             # Register hotkeys
             keyboard.add_hotkey(self.hotkey, self.start_recording, suppress=True)
             keyboard.add_hotkey(self.hotkey, self.stop_recording, trigger_on_release=True, suppress=True)
-            keyboard.add_hotkey(self.retype_hotkey, self.type_transcription, suppress=True)
+            keyboard.add_hotkey(self.retype_hotkey, self.retype_transcription, suppress=True)
     def start_heartbeat(self):
         # TODO: permanent fix hotkeys getting unregistered
         def fix_hotkeys():
             while self.running:
 
                 time.sleep(5)
-                start_time = time.time()
+                # start_time = time.time()
                 with self.keyboard_lock:
                     keyboard.unhook_all_hotkeys()
                 self.register_hotkeys()

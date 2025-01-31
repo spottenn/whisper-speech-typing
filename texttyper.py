@@ -21,11 +21,13 @@ class TextTyper:
 
             # Simulate the Ctrl+V keystroke to paste
             pyautogui.hotkey('ctrl', 'v')
-
-            # Wait a bit to ensure text is pasted before restoring clipboard
-            time.sleep(0.1)
-
-            # Restore the original clipboard content
-            pyperclip.copy(original_clipboard_content)
+            # TODO: Revert this temporary workaround for input leap.
+            # # Wait a bit to ensure text is pasted before restoring clipboard
+            # time.sleep(0.1)
+            #
+            # # Restore the original clipboard content
+            # pyperclip.copy(original_clipboard_content)
         except Exception as e:
             print(e)
+    def safe_type_text(self, text):
+        pyautogui.typewrite(text)
