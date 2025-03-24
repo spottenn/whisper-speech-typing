@@ -1,4 +1,4 @@
-# Speech-to-Text Typing with Faster Whisper
+# Whisper Speech Typing: Speech-to-Text Typing with Faster Whisper
 ___
 ## Project Status
 
@@ -21,7 +21,7 @@ Updates will be provided as development progresses.
 
 ___
 ## Quick Start
-1. Make sure you have Python, and the 2 NVIDIA libraries from the [requirements] section. 
+1. Make sure you have Python, and the 2 NVIDIA libraries from the [requirements](#requirements-and-pre-installation) section. 
 2. Open a terminal as an administrator and run these commands
 ```commandline
 git clone https://github.com/spottenn/whisper-speech-typing.git
