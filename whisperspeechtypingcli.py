@@ -1,8 +1,8 @@
 import argparse
-from recorder import Recorder
-from localtranscriber import LocalTranscriber
-from texttyper import TextTyper
-from hotkeyhandler import HotkeyHandler
+from src.recorder import Recorder
+from src.localtranscriber import LocalTranscriber
+from src.texttyper import TextTyper
+from src.hotkeyhandler import HotkeyHandler
 
 if __name__ == "__main__":
     try:
