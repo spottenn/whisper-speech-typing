@@ -1,6 +1,6 @@
 import threading
 import keyboard
-from whisperqueue import WhisperQueue
+from .whisperqueue import WhisperQueue
 
 class HotkeySaver:
     def __init__(self):

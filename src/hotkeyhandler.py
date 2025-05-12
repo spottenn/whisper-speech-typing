@@ -1,7 +1,7 @@
 import threading
 import keyboard
 import time
-from whisperqueue import WhisperQueue
+from .whisperqueue import WhisperQueue
 
 
 class HotkeyHandler:
