@@ -1,1 +1,1 @@
-{"model_size": "medium.en", "device": "gpu", "compute_type": "float16", "language": "en", "hotkey": "F4", "type_hotkey": "f3", "buffer": false, "active_gui": "systemtray"}
+{"model_size": "large-v2", "device": "gpu", "compute_type": "float16", "language": "en", "hotkey": "F4", "type_hotkey": "f3", "buffer": true, "active_gui": "systemtray"}
