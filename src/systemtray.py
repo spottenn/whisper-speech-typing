@@ -3,9 +3,9 @@ from PySide6.QtWidgets import QApplication, QSystemTrayIcon, QMenu, QLabel, QWid
 from PySide6.QtGui import QIcon, QCursor
 from PySide6.QtCore import Slot, Signal
 
-from configmanager import ConfigManager
-from settingsinterface import SettingsInterface
-from whisperqueue import WhisperQueue
+from .configmanager import ConfigManager
+from .settingsinterface import SettingsInterface
+from .whisperqueue import WhisperQueue
 
 
 class SystemTrayApp(QSystemTrayIcon):

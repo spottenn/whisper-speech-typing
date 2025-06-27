@@ -4,7 +4,7 @@ from PySide6.QtWidgets import (QApplication, QMainWindow, QPushButton, QLabel, Q
 from PySide6.QtCore import Qt, QPoint, QSize, QThread, Signal, Slot
 from PySide6.QtGui import QIcon, QFont
 from settingsinterface import SettingsInterface
-from configmanager import ConfigManager
+from .configmanager import ConfigManager
 
 
 class FloatWindow(QMainWindow):

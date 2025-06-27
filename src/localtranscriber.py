@@ -1,8 +1,8 @@
 import threading
 
 from faster_whisper import WhisperModel
-from transcriber import Transcriber
-from whisperqueue import WhisperQueue
+from .transcriber import Transcriber
+from .whisperqueue import WhisperQueue
 import numpy as np
 
 

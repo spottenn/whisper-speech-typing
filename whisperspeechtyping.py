@@ -3,16 +3,16 @@ import time
 import sys
 
 from PySide6.QtWidgets import QApplication
-from configmanager import ConfigManager
-from hotkeyhandler import HotkeyHandler
-from localtranscriber import LocalTranscriber
-from recorder import Recorder
-from texttyper import TextTyper
-from whisperqueue import WhisperQueue
+from src.configmanager import ConfigManager
+from src.hotkeyhandler import HotkeyHandler
+from src.localtranscriber import LocalTranscriber
+from src.recorder import Recorder
+from src.texttyper import TextTyper
+from src.whisperqueue import WhisperQueue
 import threading
 import gc
-from systemtray import SystemTrayApp
-from floatwindow import FloatWindow
+from src.systemtray import SystemTrayApp
+from src.floatwindow import FloatWindow
 
 
 class WhisperTypingApp(QApplication):

@@ -5,7 +5,7 @@ import io
 import wave
 import collections
 import time
-from whisperqueue import WhisperQueue
+from .whisperqueue import WhisperQueue
 
 
 class Recorder:
